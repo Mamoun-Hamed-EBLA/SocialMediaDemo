@@ -9,7 +9,7 @@ SocialMediaDemo is a project aimed at demonstrating the basic functionalities of
 - Create edit and delete comments
 - Like and unlike a posts
 - Caching in All GET requests
-
+- API key authentication
 
 ## Installation
 To get started with SocialMediaDemo, follow these steps:
