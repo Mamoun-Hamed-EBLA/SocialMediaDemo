@@ -23,14 +23,14 @@ To get started with SocialMediaDemo, follow these steps:
     cd SocialMediaDemo
     ```
 
-3. Update connection string:
+3. Update connection string (appsettings.json):
     ```appsettings.json
     "ConnectionStrings": {
        "DefaultConnection": "[Your connection string]"
    },
     ```
 
-4. Update Database:
+4. Update Database (Packege Manager Consol):
     ```Open Packege Manager Consol
     set defualt project to infrastructure
     run : Update-Database
