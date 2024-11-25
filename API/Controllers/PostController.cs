@@ -26,7 +26,7 @@ public class PostController : ApiBaseController
 			return OkObject(value!);
 		}
 		var rersult = await Mediator.Send(request, cancellationToken);
-		Cache.Set(request, rersult, DateTimeOffset.UtcNow.AddMinutes(5));
+		Cache.Set(request, rersult, DateTimeOffset.UtcNow.AddSeconds(30));
 		return OkObject(rersult);
 	}
 
