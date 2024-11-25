@@ -1,4 +1,5 @@
 ﻿using Application.Behaviors;
+using Application.Options;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,8 @@ public static class DependencyInjection
 		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandedExceptionBehavior<,>));
 
+		services.AddScoped<EnvironmentSettings>();
+		services.Configure<EnvironmentSettings>(configuration.GetSection("EnvironmentSettings"));
 		return services;
 	}
 }

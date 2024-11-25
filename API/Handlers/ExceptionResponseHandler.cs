@@ -71,7 +71,7 @@ public static class ExceptionResponseHandler
 				new ErrorDetails(
 					"https://tools.ietf.org/html/rfc7235#section-3.1",
 					Unauthorized,
-					exception)
+					new List<string>() { "Unauthorized" })
 				))
 		{
 			StatusCode = StatusCodes.Status401Unauthorized
@@ -85,7 +85,8 @@ public static class ExceptionResponseHandler
 				new ErrorDetails(
 					"https://tools.ietf.org/html/rfc7231#section-6.5.3",
 					Forbidden,
-					exception)
+					new List<string>() { "Forbidden" })
+
 				))
 		{
 			StatusCode = StatusCodes.Status403Forbidden

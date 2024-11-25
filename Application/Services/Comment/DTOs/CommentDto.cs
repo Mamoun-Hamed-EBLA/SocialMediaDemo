@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-
-namespace Application.Services.Comment.DTOs;
+﻿namespace Application.Services.Comment.DTOs;
 public class CommentDto : BaseDto, IMapFrom<CommentEntity>
 {
 	public Guid Id { get; set; }
@@ -8,6 +6,7 @@ public class CommentDto : BaseDto, IMapFrom<CommentEntity>
 
 	public string Comment { get; set; } = string.Empty;
 
+	public UserBriefDto User { get; set; } = new UserBriefDto();
 
 	public void Mapping(Profile profile)
 	{

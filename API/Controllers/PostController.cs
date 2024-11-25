@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using API.Attributes;
+using Application.Models;
 using Application.Services.Comment.Commands.Create;
 using Application.Services.Post.Commands.Create;
 using Application.Services.Post.Commands.Like;
@@ -13,11 +14,12 @@ using Microsoft.Extensions.Caching.Memory;
 namespace API.Controllers;
 
 [Authorize]
+[ApiKey]
 public class PostController : ApiBaseController
 {
 	[HttpGet()]
 	[ProducesResponseType(typeof(PaginatedList<PostDto>), 200)]
-	public async Task<IActionResult> GetAll([FromQuery] GetPostsQuery request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> GetAll([FromHeader(Name = "Api-Key")] string _, [FromQuery] GetPostsQuery request, CancellationToken cancellationToken = default)
 	{
 		if (Cache.TryGetValue(request, out var value))
 		{
@@ -30,7 +32,7 @@ public class PostController : ApiBaseController
 
 	[HttpPost()]
 	[ProducesResponseType(204)]
-	public async Task<IActionResult> Post(CreatePostCommand request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> Post([FromHeader(Name = "Api-Key")] string _, CreatePostCommand request, CancellationToken cancellationToken = default)
 	{
 		await Mediator.Send(request, cancellationToken);
 		return NoContent();
@@ -38,7 +40,7 @@ public class PostController : ApiBaseController
 
 	[HttpPut()]
 	[ProducesResponseType(204)]
-	public async Task<IActionResult> Put(UpdatePostCommand request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> Put([FromHeader(Name = "Api-Key")] string _, UpdatePostCommand request, CancellationToken cancellationToken = default)
 	{
 
 		await Mediator.Send(request, cancellationToken);
@@ -47,14 +49,14 @@ public class PostController : ApiBaseController
 
 	[HttpPost("comment")]
 	[ProducesResponseType(204)]
-	public async Task<IActionResult> AddComment(CreateCommentCommand request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> AddComment([FromHeader(Name = "Api-Key")] string _, CreateCommentCommand request, CancellationToken cancellationToken = default)
 	{
 		await Mediator.Send(request, cancellationToken);
 		return NoContent();
 	}
 	[HttpPut("like")]
 	[ProducesResponseType(204)]
-	public async Task<IActionResult> LikePost(LikePostCommand request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> LikePost([FromHeader(Name = "Api-Key")] string _, LikePostCommand request, CancellationToken cancellationToken = default)
 	{
 		await Mediator.Send(request, cancellationToken);
 		return NoContent();
@@ -62,7 +64,7 @@ public class PostController : ApiBaseController
 
 	[HttpPut("unlike")]
 	[ProducesResponseType(204)]
-	public async Task<IActionResult> UnLike(UnlikePostCommand request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> UnLike([FromHeader(Name = "Api-Key")] string _, UnlikePostCommand request, CancellationToken cancellationToken = default)
 	{
 		await Mediator.Send(request, cancellationToken);
 		return NoContent();

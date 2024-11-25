@@ -1,4 +1,5 @@
-﻿using Application.Models;
+﻿using API.Attributes;
+using Application.Models;
 using Application.Services.Comment.Commands.Delete;
 using Application.Services.Comment.Commands.Update;
 using Application.Services.Comment.DTOs;
@@ -9,12 +10,13 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace API.Controllers;
 [Authorize]
+[ApiKey]
 public class CommentController : ApiBaseController
 {
 
 	[HttpGet()]
 	[ProducesResponseType(typeof(PaginatedList<CommentDto>), 200)]
-	public async Task<IActionResult> GetAll([FromQuery] GetCommentsQuery request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> GetAll([FromHeader(Name = "Api-Key")] string _, [FromQuery] GetCommentsQuery request, CancellationToken cancellationToken = default)
 	{
 		if (Cache.TryGetValue(request, out var value))
 		{
@@ -28,14 +30,14 @@ public class CommentController : ApiBaseController
 
 	[HttpPut()]
 	[ProducesResponseType(204)]
-	public async Task<IActionResult> Put(UpdateCommentCommand request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> Put([FromHeader(Name = "Api-Key")] string _, UpdateCommentCommand request, CancellationToken cancellationToken = default)
 	{
 		await Mediator.Send(request, cancellationToken);
 		return NoContent();
 	}
 	[HttpDelete()]
 	[ProducesResponseType(204)]
-	public async Task<IActionResult> Delete(DeleteCommentCommand request, CancellationToken cancellationToken = default)
+	public async Task<IActionResult> Delete([FromHeader(Name = "Api-Key")] string _, DeleteCommentCommand request, CancellationToken cancellationToken = default)
 	{
 		await Mediator.Send(request, cancellationToken);
 		return NoContent();
